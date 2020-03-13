@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Inference of comment behavior with Poisson distribution - Maurice van Leeuwen</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="/css/web.css" type="text/css" />
+    <link rel="stylesheet" href="/css/chromastyle.css" type="text/css" />
+    
+    <script src="/js/mathjax-config.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+    
+    <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;600" rel="stylesheet">
+  </head>
+  <body class="leading-relaxed font-base">
+    
+    
+    <main class="container mx-auto max-w-max my-10">
+      
+<article class="prose prose-lg mx-8">
+  <header class="">
+    
+    <span class="text-neutral-500">Last modified: 2022-06-27 </span>
+    
+  <h1>Inference of comment behavior with Poisson distribution</h1>
+  
+  <h2 class="text-4xl font-bold text-gray-500">Using a Bayesian Inference on a Poisson model</h2>
+  
+  <a href="#">Find on github</a>
+</header>
+<h2 id="introduction">Introduction</h2>
+<h2 id="methodology">Methodology</h2>
+<p>There is an intuitive reason to choose to model our problem using a Poisson distribution rather than a linear regression. First, the number of comments is discrete and positive. In a linear regression the dependent variable is a scalar (and can be negative) while a Poisson distribution has support on \(k \in \mathbb{N}_0\): natural numbers of \(0\) or higher. Second, the number of comments is <em>right-tailed</em>: values are often lower than the mean. A Poisson distribution has a positive skew (more mass left of the mean) while a linear regression assumes normal distribution of the residuals.</p>
+<p>Let \(Y\) be the number of comments made by a user modeled as a Poisson distribution with parameter \(\pi\).</p>
+<p>\begin{equation}
+Y\sim Poisson(\pi)
+\end{equation}</p>
+<p>Random variable \(Y\) takes values \(\{0, 1, 2, \dots, n\}\) which is the number of events that occurred in a unit of time, in our case interpreted as the number of comments made by an user. The rate \(\pi\) is the expected number of events, or comments, in a unit time. The rate \(\pi\) can be modeled as a function of independent variables, consider the following model:</p>
+<p>\begin{equation}
+H_0: \pi(b) = b
+\end{equation}</p>
+<p>In the simple model (a null model) the rate function \(\pi(b)\) only depends on a base rate \(b\). This parameter \(b\) will find the average number of comments made by users. This null model can then be extended to form alternative models that factor in other effects.</p>
+<p>Besides a base rate, in our model we assume that the number of comments a user makes depends on the sentiment of the user and the number of replies a user received. Consider the following linear equation for the rate function \(\pi(s,n)\) with a base rate \(b\), sentiment \(s\) scaled by coefficient \(c_s\) and number of comments \(n\) scaled by coefficient \(c_n\):</p>
+<p>\begin{equation}
+H_s: \pi(s, n) = b + c_s \cdot s  + c_n \cdot n
+\end{equation}</p>
+<p>Another assumption we make is that certain news events <em>a priori</em> lead to fewer reactions, regardless of the sentiment of a user and number of replies the user received. In our model we can incorporate this by assuming an individual rate \(\pi_e\) for each news event \(e\), where we assume a base rate \(b_e\) specific for that news event.</p>
+<p>\begin{equation}
+H_e: \pi_e(s, n) = b_e + c_s \cdot s  + c_n \cdot n
+\end{equation}</p>
+<h3 id="model-validation">Model validation</h3>
+<p>We can compare the models by comparing their predictive accuracy over unseen data using Watanabe-Akaike information criteron (WAIC).  This method compares the lppd over the full posterior density.</p>
+<ul>
+<li>Can be used to have uncertainty bound on the number of comments Y</li>
+</ul>
+<p>\begin{equation}
+p(\theta | X) = \frac{p(X|\theta) p(\theta)}{p(X)}
+\end{equation}</p>
+<h2 id="inference">Inference</h2>
+
+</article>
+
+
+    </main>
+
+    
+    
+    
+  </body>
+</html>
+
